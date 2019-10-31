@@ -1,0 +1,23 @@
+obj-m += lkm_example.oall:
+ make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modulesclean:
+ make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+
+//INSERTING THE MODULE TO TEST IT
+sudo insmod lkm_example.ko
+
+sudo dmesg
+lsmod | grep “lkm_example”
+
+//TO REMOVE THE MODULE
+sudo rmmod lkm_example
+
+//TO AVOID TEDIOUS TASK
+test:
+ sudo dmesg -C
+ sudo insmod lkm_example.ko
+ sudo rmmod lkm_example.ko
+ dmesg
+//
+
+//RUN THE MAKE FILE NOW
+make test
